@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Message;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class MessageFactory extends Factory
@@ -24,7 +25,7 @@ class MessageFactory extends Factory
         return [
             'title' => $this->faker->text(200),
             'user_id' => rand(1,3),
-            'chat_id' => 1
+            'chat_id' => 4
         ];
     }
 }

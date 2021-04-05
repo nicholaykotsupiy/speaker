@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Chat;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ChatFactory extends Factory
@@ -22,7 +23,8 @@ class ChatFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->company
+            'name' => $this->faker->company,
+            'admin' => 1
         ];
     }
 }

@@ -3,17 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+use App\Http\Controllers\API\UserController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -24,18 +14,39 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->name('dashboard');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/chats', function () {
-    return Inertia::render('Chats');
-})->name('chats');
+Route::middleware('auth:sanctum')->group(function() {
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/find', function () {
-    return Inertia::render('Find');
-})->name('find');
+    Route::get('/users/{login}', [UserController::class, 'show']);
+    Route::put('/users', [UserController::class, 'store']);
+    Route::delete('/users/{login}', [UserController::class, 'destroy']);
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/profile', function () {
-    return Inertia::render('Profile');
-})->name('profile');
+    Route::get('/chatItems', [\App\Http\Controllers\ChatController::class, 'index']);
+
+});
+
+
+
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
+
+    Route::get('/chats', function () {
+        return Inertia::render('Chats');
+    })->name('chats');
+
+    Route::get('/room/{id}', function () {
+        return Inertia::render('Room');
+    })->name('room');
+
+    Route::get('/find', function () {
+        return Inertia::render('Find');
+    })->name('find');
+
+    Route::get('/profile', function () {
+        return Inertia::render('Profile');
+    })->name('profile');
+
+});

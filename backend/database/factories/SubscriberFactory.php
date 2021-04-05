@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Subscriber;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class SubscriberFactory extends Factory
@@ -22,7 +23,8 @@ class SubscriberFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'user_id' => 1,
+            'subscriber_id' => User::all()->pluck('id')->random()
         ];
     }
 }

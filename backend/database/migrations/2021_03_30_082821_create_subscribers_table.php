@@ -15,11 +15,11 @@ class CreateSubscribersTable extends Migration
     {
         Schema::create('subscribers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user1_id')->constrained('users', 'id');
-            $table->foreignId('user2_id')->constrained('users', 'id');
+            $table->foreignId('user_id')->constrained('users', 'id');
+            $table->foreignId('subscriber_id')->constrained('users', 'id');
             $table->timestamps();
 
-            $table->unique(['user1_id', 'user2_id']);
+            $table->unique(['user_id', 'subscriber_id']);
         });
     }
 

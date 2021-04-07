@@ -3,13 +3,10 @@
         <div v-if="Object.keys(user).length">
             <div class="flex justify-between py-4 px-2 border-b-2 hover:bg-gray-100">
                 <div>{{ user[0].name }}</div>
-                <button
-                    @click="subscribe"
-                    class="bg-blue-500 py-1 px-3 cursor-pointer rounded-md focus:outline-none"
-                    :class="{'gray': isSubscribed}"
-                >
-                    {{ isSubscribed ? 'Unsubscribe' : 'Subscribe' }}
-                </button>
+                <BaseButton
+                    @subscribe="subscribe"
+                    :isSubscribed="isSubscribed"
+                />
             </div>
         </div>
         <div v-else class="text-center">
@@ -19,10 +16,11 @@
 </template>
 
 <script>
-import Button from "../../Jetstream/Button";
+import BaseButton from "@/Base/BaseButton";
+
 export default {
     name: "FindItem",
-    components: {Button},
+    components: {BaseButton},
     props: {
         user: {
             type: Array,

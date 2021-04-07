@@ -22,12 +22,13 @@ class UserController
     public function store(StoreRequest $request)
     {
 //        $request->validate();
-//
-//        $subscriber = new Subscriber;
-//        $subscriber->user_id = $request->user_id;
-//        $subscriber->subscriber_id = Auth::id();
-//        $subscriber->save();
-        return "Good";
+
+        $subscriber = new Subscriber;
+        $subscriber->user_id = $request->user_id;
+        $subscriber->subscriber_id = Auth::id();
+        $subscriber->save();
+
+        return response(true, 201);
     }
 
     public function show(String $login): JsonResponse
@@ -54,7 +55,7 @@ class UserController
         $isSubscribed = $currentUser->subscribers->where('id', Auth::id());
         $subscriber = Subscriber::where('user_id', $currentUser->id)->where('subscriber_id', Auth::id());
 
-        if(isset($isSubscribed[1])) {
+        if(isset($isSubscribed[0]) || isset($isSubscribed[1])) {
             $subscriber->delete();
             return 'Good';
         }else {

@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\AccountController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -17,15 +18,17 @@ Route::get('/', function () {
 
 Route::middleware('auth:sanctum')->group(function() {
 
-    Route::get('/users/{login}', [UserController::class, 'show']);
+    Route::get('/users/{login}', [UserController::class, 'show'])->middleware('checkLogin');
     Route::put('/users', [UserController::class, 'store']);
     Route::delete('/users/{login}', [UserController::class, 'destroy']);
+
+
+    Route::get('/subscribers', [AccountController::class, 'subscribers']);
+    Route::get('/subscribe', [AccountController::class, 'subscribe']);
 
     Route::get('/chatItems', [\App\Http\Controllers\ChatController::class, 'index']);
 
 });
-
-
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
@@ -45,8 +48,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         return Inertia::render('Find');
     })->name('find');
 
-    Route::get('/profile', function () {
-        return Inertia::render('Profile');
-    })->name('profile');
-
+    Route::get('/account', function () {
+        return Inertia::render('Account');
+    })->name('account');
 });

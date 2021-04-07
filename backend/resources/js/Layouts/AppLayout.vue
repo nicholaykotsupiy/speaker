@@ -26,8 +26,8 @@
                                 <jet-nav-link :href="route('find')" :active="route().current('find')">
                                     Find
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('profile')" :active="route().current('profile')">
-                                    Profile
+                                <jet-nav-link :href="route('account')" :active="route().current('account')">
+                                    Account
                                 </jet-nav-link>
                             </div>
                         </div>
@@ -158,8 +158,8 @@
                         <jet-responsive-nav-link :href="route('find')" :active="route().current('find')">
                             Find
                         </jet-responsive-nav-link>
-                        <jet-responsive-nav-link :href="route('profile')" :active="route().current('profile')">
-                            Profile
+                        <jet-responsive-nav-link :href="route('account')" :active="route().current('account')">
+                            Account
                         </jet-responsive-nav-link>
                     </div>
 

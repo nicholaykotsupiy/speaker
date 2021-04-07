@@ -20,7 +20,7 @@ export default {
     }),
     mounted() {
         axios.get('/chatItems').then(response => {
-            console.log(response.data)
+            // console.log(response.data)
             this.chats = response.data
 
         })

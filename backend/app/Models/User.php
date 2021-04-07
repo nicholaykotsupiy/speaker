@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class User extends Authenticatable
 {
@@ -61,9 +63,29 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    public function getSubscribersCountAttribute() // Подпищики
+    {
+        return Auth::user()->subscribers->count();
+    }
+    public function getSubscribeCountAttribute() // Подписки
+    {
+        return Subscriber::where('subscriber_id', Auth::id())->get()->count();
+    }
+
+    public function subscribed(Int $id)
+    {
+        return boolval(Auth::user()->subscribe->find($id));
+    }
+
+
     public function chats(): BelongsToMany
     {
         return $this->belongsToMany(Chat::class);
+    }
+
+    public function subscribe(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'subscribers', 'subscriber_id', 'user_id');
     }
 
     public function subscribers(): BelongsToMany

@@ -29,54 +29,21 @@ export default {
     }),
     methods: {
         getUser(data) {
-            // const csrfToken = document.querySelector('meta[name="csrf-token"]').content
-            // console.log(csrfToken)
-            /* Headers for axios request
-            * {
-                'Content-type': 'application/json',
-                'Authorization': `Bearer ${csrfToken}`,
-                'Access-Control-Allow-Origin': '*'
-               }
-            * */
-            axios.get('/users/' + data.userLogin)
+            axios.get('/users/' + data.userLogin.toLowerCase())
                 .then(response => {
-
-                    this.user = response.data.user
-                    this.isSubscribed = !!(response.data.subscribed)
-                    console.log(response.data)
+                    this.user = response.data.user || []
+                    this.isSubscribed = response.data.subscribed || false
                 })
         },
         subscribedUser() {
             if(this.isSubscribed) {
                 axios.delete('/users/' + this.user[0].id)
-                    .then(response => console.log(response))
+                    .then(response => this.isSubscribed = false)
             }else {
                 axios.post('/users/?_method=put', { user_id: this.user[0].id })
-                    .then(response => console.log(response))
+                    .then(response => this.isSubscribed = true)
             }
-
-            // this.isSubscribed = !this.isSubscribed
         }
-        // subscribedUser() {
-        //     let postData = {
-        //         user_id: this.user[0].id
-        //     }
-        //
-        //     let headers = {
-        //         'Content-Type': 'application/json',
-        //         "Access-Control-Allow-Origin": "*",
-        //     }
-        //
-        //     if(this.isSubscribed){
-        //         console.log('delete')
-        //         // axios.delete()
-        //     }else {
-        //         console.log('create')
-        //         axios.post('/users', postData, {"headers": headers})
-        //             .then(this.isSubscribed = true)
-        //     }
-        //     this.isSubscribed = !this.isSubscribed
-        // }
     }
 }
 </script>

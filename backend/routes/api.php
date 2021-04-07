@@ -10,7 +10,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/users', [UserController::class, 'index']);
-Route::middleware('auth:sanctum')->get('/users/{login}', [UserController::class, 'show']);
+Route::middleware('auth:sanctum')
+    ->get('/users/{login}', [UserController::class, 'show'])
+    ->middleware('checkLogin');
 
 
 

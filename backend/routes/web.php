@@ -18,13 +18,16 @@ Route::get('/', function () {
 
 Route::middleware('auth:sanctum')->group(function() {
 
-    Route::get('/users/{login}', [UserController::class, 'show'])->middleware('checkLogin');
+//    Route::get('/users/{login}', [UserController::class, 'show'])->middleware('checkLogin');
     Route::put('/users', [UserController::class, 'store']);
     Route::delete('/users/{login}', [UserController::class, 'destroy']);
 
 
     Route::get('/subscribers', [AccountController::class, 'subscribers']);
     Route::get('/subscribe', [AccountController::class, 'subscribe']);
+
+    Route::put('/image/upload', [AccountController::class, 'edit']);
+    Route::get('/image', [AccountController::class, 'showImage']);
 
     Route::get('/chatItems', [\App\Http\Controllers\ChatController::class, 'index']);
 

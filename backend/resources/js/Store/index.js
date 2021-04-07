@@ -2,6 +2,7 @@ import { createStore } from 'vuex'
 
 export default createStore({
     state: {
+        user: [],
         subscribe: [],
         subscribers: []
     },
@@ -31,6 +32,18 @@ export default createStore({
                     state.subscribe.data.push(subs)
                     state.subscribe.subscribe_count += 1
                 })
+        },
+        setUserImage(state) {
+            axios.get('/image')
+                .then(response => {
+                    console.log(response)
+                    state.user = response.data
+                    // console.log(response.data)
+                })
+        },
+        sendImageForm(state, form) {
+            axios.post('/image/upload/?_method=put', form)
+                .then()
         }
     },
     actions: {
@@ -47,6 +60,14 @@ export default createStore({
             } else {
                 commit('addSubscriber', subs)
             }
+        },
+
+        upploadImage( { commit }, image ) {
+            let form = new FormData()
+            form.append('image', image)
+
+            commit('sendImageForm', form)
+            commit('setUserImage')
         }
     },
     getters: {
@@ -55,6 +76,15 @@ export default createStore({
         },
         subscribers(state) {
             return state.subscribers
+        },
+        imagePath(state) {
+
+            if(state.user.path){
+                return `storage/${state.user.path}`
+            }else {
+                return `https://www.searchpng.com/wp-content/uploads/2019/02/Profile-PNG-Icon.png`
+            }
+
         }
     }
 })

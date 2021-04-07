@@ -5,7 +5,7 @@
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <div class="flex justify-between items-center p-6">
                         <div>
-                            <AccountImg />
+                            <AccountImg @image="openImageModal" />
                         </div>
                         <div>
                             <AccountButton
@@ -32,6 +32,11 @@
                         :open="openSubscribersModalList"
                         @close="openSubscribersModal"
                     />
+                    <AccountImageModal
+                        name="Image"
+                        :open="openImage"
+                        @close="openImageModal"
+                    />
                 </div>
             </div>
         </div>
@@ -43,17 +48,20 @@ import AppLayout from '@/Layouts/AppLayout'
 import AccountImg from "./Account/AccountImg"
 import AccountButton from "./Account/AccountButton"
 import AccountModal from "./Account/AccountModal"
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
+import AccountImageModal from "./Account/AccountImageModal";
 
 export default {
     name: 'Account',
     components: {
+        AccountImageModal,
         AccountModal,
         AccountImg,
         AccountButton,
         AppLayout,
     },
     data: () => ({
+        openImage: false,
         openSubscribeModalList: false,
         openSubscribersModalList: false
     }),
@@ -62,22 +70,29 @@ export default {
             'setSubscribeToState',
             'setSubscribersToState'
         ]),
+        ...mapMutations([
+            'setUserImage'
+        ]),
         openSubscribeModal() {
             this.openSubscribeModalList = !this.openSubscribeModalList;
         },
         openSubscribersModal() {
             this.openSubscribersModalList = !this.openSubscribersModalList;
         },
+        openImageModal() {
+            this.openImage = !this.openImage;
+        }
     },
     computed: {
         ...mapGetters([
             'subscribe',
-            'subscribers'
+            'subscribers',
         ])
     },
     mounted() {
         this.setSubscribeToState()
         this.setSubscribersToState()
+        this.setUserImage()
     }
 }
 </script>

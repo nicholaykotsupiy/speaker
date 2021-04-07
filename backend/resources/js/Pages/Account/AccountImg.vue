@@ -1,15 +1,28 @@
 <template>
-    <div class="img w-28 ml-10">
+    <div class="img ml-10">
         <img
-            class="rounded-full border shadow-lg"
-            src="https://www.searchpng.com/wp-content/uploads/2019/02/Profile-PNG-Icon.png"
+            @click="clickHandler"
+            class="rounded-full w-32 h-32 border shadow-lg cursor-pointer"
+            :src="imagePath"
             alt="profile photo"
         />
     </div>
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
-name: "AccountImg"
+    name: "AccountImg",
+    methods: {
+        clickHandler() {
+            this.$emit('image')
+        }
+    },
+    computed: {
+        ...mapGetters([
+            'imagePath'
+        ])
+    }
 }
 </script>

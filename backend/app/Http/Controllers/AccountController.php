@@ -37,15 +37,15 @@ class AccountController extends Controller
     public function edit(UploadRequest $request)
     {
         if($request->hasFile('image')) {
-            if(Auth::user()->image) {
-//                Storage::delete("storage/{Auth::user()->image->path}");
-//                unlink(public_path());
-////                unlink();
+            if(Auth::user()->image)
+            {
+                Storage::delete(Auth::user()->image->path);
                 Auth::user()->image->delete();
             }
 
-            Image::saveForUser($request->file('image'));
-            return response()->json([]);
+            $image = Image::saveForUser($request->file('image'));
+
+            return response()->json($image);
         }
 
         return response()->json('File not exist');

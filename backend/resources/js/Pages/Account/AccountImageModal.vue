@@ -57,6 +57,7 @@ export default {
         sendForm() {
             this.upploadImage(this.image)
             this.$refs.input.value = null
+            this.closeHandler()
         }
     }
 }

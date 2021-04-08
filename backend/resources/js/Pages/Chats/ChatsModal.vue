@@ -13,7 +13,23 @@
 
         <template #content>
             <div class="mt-4">
-                <AccountModalList :subsList="subsList" />
+                <form class="flex flex-col">
+                    <label>
+                        Name:
+                        <input type="text" name="chat_name">
+                    </label>
+                    <label>
+                         User list:
+                        <select name="user_list">
+                            <option value="">Jhon Doe</option>
+                            <option value="">Jhon Doe</option>
+                            <option value="">Jhon Doe</option>
+                            <option value="">Jhon Doe</option>
+                            <option value="">Jhon Doe</option>
+                            <option value="">Jhon Doe</option>
+                        </select>
+                    </label>
+                </form>
             </div>
         </template>
     </dialog-modal>
@@ -22,17 +38,14 @@
 <script>
 import DialogModal from '@/Jetstream/DialogModal'
 import SecondaryButton from '../../Jetstream/SecondaryButton'
-import AccountModalList from "./AccountModalList";
 
 export default {
-    name: "AccountModal",
+    name: "ChatsModal",
     components: {
-        AccountModalList,
         DialogModal,
         SecondaryButton
     },
-    props: ['name','open', 'subsList'],
-    emits: ['count'],
+    props: ['name','open'],
     methods: {
         closeHandler() {
             this.$emit('close')

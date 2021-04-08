@@ -35,15 +35,11 @@ export default createStore({
         },
         setUserImage(state) {
             axios.get('/image')
-                .then(response => {
-                    console.log(response)
-                    state.user = response.data
-                    // console.log(response.data)
-                })
+                .then(response => state.user = response.data)
         },
         sendImageForm(state, form) {
             axios.post('/image/upload/?_method=put', form)
-                .then()
+                .then(response => state.user = response.data)
         }
     },
     actions: {
@@ -67,7 +63,6 @@ export default createStore({
             form.append('image', image)
 
             commit('sendImageForm', form)
-            commit('setUserImage')
         }
     },
     getters: {

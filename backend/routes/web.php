@@ -18,7 +18,7 @@ Route::get('/', function () {
 
 Route::middleware('auth:sanctum')->group(function() {
 
-//    Route::get('/users/{login}', [UserController::class, 'show'])->middleware('checkLogin');
+    Route::get('/users/{login}', [UserController::class, 'show'])->middleware('checkLogin');
     Route::put('/users', [UserController::class, 'store']);
     Route::delete('/users/{login}', [UserController::class, 'destroy']);
 

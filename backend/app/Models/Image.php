@@ -25,5 +25,7 @@ class Image extends Model
         $image->path = $imageFile->store('/'.Auth::user()->login.'/'.$date, "public");
 
         $image->save();
+
+        return $image;
     }
 }

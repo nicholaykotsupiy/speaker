@@ -13,22 +13,22 @@
 
         <template #content>
             <div class="mt-4">
-                <form class="flex flex-col">
-                    <label>
-                        Name:
-                        <input type="text" name="chat_name">
+                <form class="flex flex-col" @submit.prevent="clickHandle">
+                    <label class="my-2 flex items-center justify-center">
+                        <input v-model="input" type="text" name="chat_name" placeholder="Name..." class="w-80 border-0 border-b-2 py-1 px-2 focus:ring-0" maxlength="30">
+                        {{ input.length }}/30
                     </label>
-                    <label>
-                         User list:
-                        <select name="user_list">
-                            <option value="">Jhon Doe</option>
-                            <option value="">Jhon Doe</option>
-                            <option value="">Jhon Doe</option>
-                            <option value="">Jhon Doe</option>
-                            <option value="">Jhon Doe</option>
-                            <option value="">Jhon Doe</option>
-                        </select>
-                    </label>
+                    <select v-model="usersID" multiple name="user_list" class="border-none h-40 focus:ring-0">
+                        <option disabled>User list:</option>
+                        <option
+                            v-for="subscriber in subscribers.data"
+                            :key="subscriber.id"
+                            :value="subscriber.id"
+                        >
+                            {{ subscriber.name }}
+                        </option>
+                    </select>
+                    <input type="submit" value="Create chat" class="block px-4 py-2 bg-blue-400 mx-auto rounded-md mt-4">
                 </form>
             </div>
         </template>
@@ -38,6 +38,7 @@
 <script>
 import DialogModal from '@/Jetstream/DialogModal'
 import SecondaryButton from '../../Jetstream/SecondaryButton'
+import {mapActions, mapGetters} from 'vuex'
 
 export default {
     name: "ChatsModal",
@@ -46,11 +47,34 @@ export default {
         SecondaryButton
     },
     props: ['name','open'],
+    data: () => ({
+        input: '',
+        usersID: []
+    }),
     methods: {
+        ...mapActions([
+            'createChat'
+        ]),
         closeHandler() {
             this.$emit('close')
         },
+        clickHandle() {
+            this.createChat({
+                input: this.input,
+                usersID: this.usersID,
+            })
+            this.input = ''
+            this.usersID = []
+            this.closeHandler()
+        }
+    },
+    watch: {
 
+    },
+    computed: {
+        ...mapGetters([
+            'subscribers'
+        ]),
     }
 }
 </script>

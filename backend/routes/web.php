@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\RoomController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -29,7 +31,8 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::put('/image/upload', [AccountController::class, 'edit']);
     Route::get('/image', [AccountController::class, 'showImage']);
 
-    Route::get('/chatItems', [\App\Http\Controllers\ChatController::class, 'index']);
+    Route::get('/chatItems', [ChatController::class, 'index']);
+    Route::put('/chats', [ChatController::class, 'store']);
 
 });
 
@@ -43,9 +46,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         return Inertia::render('Chats');
     })->name('chats');
 
-    Route::get('/room/{id}', function () {
-        return Inertia::render('Room');
-    })->name('room');
+    Route::post('/room', [RoomController::class, 'index'])->name('room');
 
     Route::get('/find', function () {
         return Inertia::render('Find');

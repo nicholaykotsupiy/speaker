@@ -10,24 +10,24 @@
 
 <script>
 import ChatsListItem from "./ChatsListItem"
+import {mapGetters, mapMutations} from "vuex";
 export default {
     name: "ChatsLIst",
     components: {
         ChatsListItem,
     },
-    data: () => ({
-      chats: []
-    }),
+    methods: {
+        ...mapMutations([
+            'setAllChatsToState'
+        ])
+    },
+    computed: {
+        ...mapGetters([
+            'chats'
+        ])
+    },
     mounted() {
-        axios.get('/chatItems').then(response => {
-            // console.log(response.data)
-            this.chats = response.data
-
-        })
+        this.setAllChatsToState()
     }
 }
 </script>
-
-<style scoped>
-
-</style>

@@ -4,7 +4,8 @@ export default createStore({
     state: {
         user: [],
         subscribe: [],
-        subscribers: []
+        subscribers: [],
+        chats: []
     },
     mutations: {
         setSubscribeToState( state ) {
@@ -40,6 +41,16 @@ export default createStore({
         sendImageForm(state, form) {
             axios.post('/image/upload/?_method=put', form)
                 .then(response => state.user = response.data)
+        },
+        setAllChatsToState(state) {
+            axios.get('/chatItems')
+                .then(response => state.chats = response.data)
+        },
+
+        setChatToState(state, form) {
+            axios.post('/chats/?_method=put', form)
+                .then( response => state.chats.push(response.data) )
+                .catch( e => console.error(e) )
         }
     },
     actions: {
@@ -63,7 +74,15 @@ export default createStore({
             form.append('image', image)
 
             commit('sendImageForm', form)
-        }
+        },
+
+        createChat({ commit }, payload) {
+            let form = new FormData()
+            form.append('name', payload.input)
+            form.append('usersID', payload.usersID)
+
+            commit('setChatToState', form)
+        },
     },
     getters: {
         subscribe(state) {
@@ -79,7 +98,9 @@ export default createStore({
             }else {
                 return `https://www.searchpng.com/wp-content/uploads/2019/02/Profile-PNG-Icon.png`
             }
-
+        },
+        chats(state) {
+            return state.chats
         }
     }
 })

@@ -29,6 +29,7 @@
 import AppLayout from '@/Layouts/AppLayout'
 import ChatsList from "./Chats/ChatsList"
 import ChatsModal from "./Chats/ChatsModal";
+import {mapActions} from "vuex";
 
 export default {
     components: {
@@ -40,9 +41,15 @@ export default {
         openChatsModalList: false,
     }),
     methods: {
+        ...mapActions([
+            'setSubscribersToState'
+        ]),
         openChatsModal() {
             this.openChatsModalList = !this.openChatsModalList
         }
+    },
+    mounted() {
+        this.setSubscribersToState()
     }
 }
 </script>

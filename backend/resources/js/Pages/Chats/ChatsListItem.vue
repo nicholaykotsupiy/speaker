@@ -1,27 +1,25 @@
 <template>
     <li class="py-4 px-2 border-b-2 cursor-pointer hover:bg-gray-100">
-        <nav-link :href="route('dashboard')" class="w-full" :active="route().current('dashboard')">
+        <inertia-link :href="route('room')" method="post" :data="{ chat }" class="w-full" @click="openRoom">
             <span>{{ chat.name }}</span>
-        </nav-link>
+        </inertia-link>
     </li>
 </template>
 
 <script>
-import NavLink from '@/Jetstream/NavLink'
 export default {
     name: "ChatsListItem",
-    components: {
-        NavLink,
-    },
     props: {
         chat: {
             type: Object,
             required: true
         }
+    },
+    methods: {
+        openRoom() {
+            axios.post('/room', this.chat.id)
+        }
     }
 }
 </script>
 
-<style scoped>
-
-</style>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ChatResource;
 use App\Models\Chat;
+use App\Models\ChatUser;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,24 +22,27 @@ class ChatController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
-        //
+        $chat = new Chat();
+
+        $chat->name = $request->name;
+        $chat->admin = Auth::id();
+
+        $chat->save();
+
+        $usersID = explode(',', $request->usersID);
+        $chat->users()->attach(Auth::id());
+        foreach ($usersID as $userID) {
+            $chat->users()->attach($userID);
+        }
+
+        return response()->json($request);
     }
 
     /**
@@ -48,17 +52,6 @@ class ChatController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Chat $chat)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Chat  $chat
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Chat $chat)
     {
         //
     }

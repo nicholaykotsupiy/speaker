@@ -3,7 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\RoomController;
@@ -23,7 +23,6 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::get('/users/{login}', [UserController::class, 'show'])->middleware('checkLogin');
     Route::put('/users', [UserController::class, 'store']);
     Route::delete('/users/{login}', [UserController::class, 'destroy']);
-
 
     Route::get('/subscribers', [AccountController::class, 'subscribers']);
     Route::get('/subscribe', [AccountController::class, 'subscribe']);

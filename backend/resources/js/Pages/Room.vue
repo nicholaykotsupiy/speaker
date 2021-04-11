@@ -41,7 +41,6 @@ export default {
         ])
     },
     created() {
-
         this.setMessagesToState(this.messages.data)
 
         Echo.private('chat')

@@ -30,6 +30,7 @@ export default createStore({
         addSubscriber( state, subs ) {
             axios.post('/users/?_method=put', { user_id: subs.id })
                 .then(response => {
+                    console.log(subs)
                     subs.subscribed = true
                     state.subscribe.data.push(subs)
                     state.subscribe.subscribe_count += 1
@@ -87,7 +88,7 @@ export default createStore({
                     state.chats.splice(index, 1)
                 })
                 .catch(e => console.log(e))
-        },
+        }
     },
     actions: {
         setSubscribeToState({ commit }) {

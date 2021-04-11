@@ -1,11 +1,9 @@
 <template>
     <app-layout>
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white py-6 overflow-hidden  shadow-xl sm:rounded-lg">
-                    <FindForm @find="getUser"/>
-                    <FindItem :user="user" :isSubscribed="isSubscribed" @subscribe="subscribedUser"/>
-                </div>
+        <div class="py-12 max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white py-6 overflow-hidden  shadow-xl sm:rounded-lg">
+                <FindForm @find="getUser"/>
+                <FindItem :user="user" @subscribe="subscribedUser"/>
             </div>
         </div>
     </app-layout>
@@ -15,7 +13,7 @@
 import AppLayout from '@/Layouts/AppLayout'
 import FindForm from './Find/FindForm'
 import FindItem from './Find/FindItem'
-
+import { mapActions } from 'vuex'
 
 export default {
     components: {
@@ -24,25 +22,19 @@ export default {
         FindItem
     },
     data: () => ({
-        user: [],
-        isSubscribed: false
+        user: {},
     }),
     methods: {
+        ...mapActions([
+            'subscribe'
+        ]),
         getUser(data) {
             axios.get('/users/' + data.userLogin.toLowerCase())
-                .then(response => {
-                    this.user = response.data.user || []
-                    this.isSubscribed = response.data.subscribed || false
-                })
+                .then(response => this.user = response.data || {})
+                .catch( e => console.error('Error:', e) )
         },
         subscribedUser() {
-            if(this.isSubscribed) {
-                axios.delete('/users/' + this.user[0].id)
-                    .then(response => this.isSubscribed = false)
-            }else {
-                axios.post('/users/?_method=put', { user_id: this.user[0].id })
-                    .then(response => this.isSubscribed = true)
-            }
+            this.subscribe(this.user)
         }
     }
 }

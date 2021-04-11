@@ -1,43 +1,45 @@
 <template>
     <app-layout>
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <div class="flex justify-between items-center p-6">
+        <div class="py-12 max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="flex justify-between items-center p-6">
+                    <div class="">
+                        <AccountImg @image="openImageModal" />
                         <div>
-                            <AccountImg @image="openImageModal" />
-                        </div>
-                        <div>
-                            <AccountButton
-                                @open="openSubscribeModal"
-                                title="Subscribe"
-                                :count="subscribe.subscribe_count"
-                            />
-                            <AccountButton
-                                @open="openSubscribersModal"
-                                title="Subscribers"
-                                :count="subscribers.subscribers_count"
-                            />
+                            <div class="my-2">Name: Orumurin</div>
+                            <div>Login: orumurin</div>
                         </div>
                     </div>
-                    <AccountModal
-                        name="Subscribe"
-                        :subsList="subscribe.data"
-                        :open="openSubscribeModalList"
-                        @close="openSubscribeModal"
-                    />
-                    <AccountModal
-                        name="Subscribers"
-                        :subsList="subscribers.data"
-                        :open="openSubscribersModalList"
-                        @close="openSubscribersModal"
-                    />
-                    <AccountImageModal
-                        name="Image"
-                        :open="openImage"
-                        @close="openImageModal"
-                    />
+                    <div>
+                        <AccountButton
+                            @open="openSubscribeModal"
+                            title="Subscribe"
+                            :count="subscribe.subscribe_count"
+                        />
+                        <AccountButton
+                            @open="openSubscribersModal"
+                            title="Subscribers"
+                            :count="subscribers.subscribers_count"
+                        />
+                    </div>
                 </div>
+                <AccountModal
+                    name="Subscribe"
+                    :subsList="subscribe.data"
+                    :open="openSubscribeModalList"
+                    @close="openSubscribeModal"
+                />
+                <AccountModal
+                    name="Subscribers"
+                    :subsList="subscribers.data"
+                    :open="openSubscribersModalList"
+                    @close="openSubscribersModal"
+                />
+                <AccountImageModal
+                    name="Image"
+                    :open="openImage"
+                    @close="openImageModal"
+                />
             </div>
         </div>
     </app-layout>

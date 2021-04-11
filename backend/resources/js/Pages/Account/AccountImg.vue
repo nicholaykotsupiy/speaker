@@ -1,5 +1,5 @@
 <template>
-    <div class="img ml-10">
+    <div>
         <img
             @click="clickHandler"
             class="rounded-full w-32 h-32 border shadow-lg cursor-pointer"

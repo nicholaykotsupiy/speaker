@@ -1,17 +1,15 @@
 <template>
     <div class="List">
-        <div v-if="Object.keys(user).length">
-            <div class="flex justify-between py-4 px-2 border-b-2 hover:bg-gray-100">
-                <div>{{ user[0].name }}</div>
+        <div v-if="Object.keys(user).length !== 0">
+            <div class="flex items-center justify-between py-4 px-2 border-b-2 hover:bg-gray-100">
+                <div>{{ user.name }}</div>
                 <BaseButton
                     @subscribe="subscribe"
-                    :isSubscribed="isSubscribed"
+                    :isSubscribed="user.subscribed"
                 />
             </div>
         </div>
-        <div v-else class="text-center">
-            Nothing find
-        </div>
+        <div v-else class="text-center">Nothing find</div>
     </div>
 </template>
 
@@ -24,10 +22,6 @@ export default {
     props: {
         user: {
             type: Array,
-            required: true
-        },
-        isSubscribed: {
-            type: Boolean,
             required: true
         }
     },

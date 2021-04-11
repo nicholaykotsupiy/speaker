@@ -31,16 +31,8 @@ export default {
     },
     watch: {
         userName() {
-            if(this.userName.trim() !== ''){
-                this.disable = false
-            } else {
-                this.disable = true
-            }
+            this.disable = this.userName.trim() === ''
         }
     }
 }
 </script>
-
-<style scoped>
-
-</style>

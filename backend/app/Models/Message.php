@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Message extends Model
 {
     use HasFactory;
+
+    public $fillable = ['title'];
+
     public function chats(): BelongsTo
     {
         return $this->BelongsTo(Chat::class);

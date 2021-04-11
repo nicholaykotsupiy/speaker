@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Subscriber;
 use Illuminate\Database\Seeder;
 
 class SubscriberSeeder extends Seeder
@@ -13,6 +14,6 @@ class SubscriberSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Subscriber::factory(10)->create();
     }
 }

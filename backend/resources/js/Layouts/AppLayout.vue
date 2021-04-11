@@ -10,24 +10,21 @@
                         <div class="flex">
                             <!-- Logo -->
                             <div class="flex-shrink-0 flex items-center">
-                                <inertia-link :href="route('dashboard')">
+                                <inertia-link :href="route('chats')">
                                     <jet-application-mark class="block h-9 w-auto" />
                                 </inertia-link>
                             </div>
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <jet-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
-                                </jet-nav-link>
                                 <jet-nav-link :href="route('chats')" :active="route().current('chats')">
                                     Chats
                                 </jet-nav-link>
                                 <jet-nav-link :href="route('find')" :active="route().current('find')">
                                     Find
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('profile')" :active="route().current('profile')">
-                                    Profile
+                                <jet-nav-link :href="route('account')" :active="route().current('account')">
+                                    Account
                                 </jet-nav-link>
                             </div>
                         </div>
@@ -149,17 +146,14 @@
                 <!-- Responsive Navigation Menu -->
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
-                        <jet-responsive-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
-                        </jet-responsive-nav-link>
                         <jet-responsive-nav-link :href="route('chats')" :active="route().current('chats')">
                             Chats
                         </jet-responsive-nav-link>
                         <jet-responsive-nav-link :href="route('find')" :active="route().current('find')">
                             Find
                         </jet-responsive-nav-link>
-                        <jet-responsive-nav-link :href="route('profile')" :active="route().current('profile')">
-                            Profile
+                        <jet-responsive-nav-link :href="route('account')" :active="route().current('account')">
+                            Account
                         </jet-responsive-nav-link>
                     </div>
 

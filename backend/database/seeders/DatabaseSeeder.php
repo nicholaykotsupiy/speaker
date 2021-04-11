@@ -14,10 +14,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-//         \App\Models\User::factory(10)->create();
+//         \App\Models\User::factory(1)->create();
          $this->call([
-//            ChatSeeder::class,
-         MessageSeeder::class,
+//             ChatSeeder::class,
+//             SubscriberSeeder::class,
+//             MessageSeeder::class
+            ImageSeeder::class
          ]);
     }
 }

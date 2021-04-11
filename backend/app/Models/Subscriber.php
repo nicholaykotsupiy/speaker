@@ -8,9 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Subscriber extends Model
 {
     use HasFactory;
-
-    public function users()
-    {
-        return $this->hasMany(User::class, 'user2_id');
-    }
+    protected $fillable = [
+        'user_id',
+        'subscriber_id'
+    ];
 }

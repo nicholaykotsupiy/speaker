@@ -26,9 +26,9 @@ Route::middleware('auth:sanctum')->group(function() {
 
     Route::get('/subscribers', [AccountController::class, 'subscribers']);
     Route::get('/subscribe', [AccountController::class, 'subscribe']);
-
     Route::put('/image/upload', [AccountController::class, 'edit']);
     Route::get('/image', [AccountController::class, 'showImage']);
+    Route::get('/user_info', [AccountController::class, 'userInfo']);
 
     Route::get('/chatItems', [ChatController::class, 'index']);
     Route::put('/chats', [ChatController::class, 'store']);

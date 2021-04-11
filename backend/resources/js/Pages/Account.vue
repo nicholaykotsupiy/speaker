@@ -6,8 +6,8 @@
                     <div class="">
                         <AccountImg @image="openImageModal" />
                         <div>
-                            <div class="my-2">Name: Orumurin</div>
-                            <div>Login: orumurin</div>
+                            <div class="my-2">Name: {{ user.name }}</div>
+                            <div>Login: {{ user.login }}</div>
                         </div>
                     </div>
                     <div>
@@ -73,7 +73,8 @@ export default {
             'setSubscribersToState'
         ]),
         ...mapMutations([
-            'setUserImage'
+            'setUserImage',
+            'setUserInfo'
         ]),
         openSubscribeModal() {
             this.openSubscribeModalList = !this.openSubscribeModalList;
@@ -89,12 +90,14 @@ export default {
         ...mapGetters([
             'subscribe',
             'subscribers',
+            'user'
         ])
     },
     mounted() {
         this.setSubscribeToState()
         this.setSubscribersToState()
         this.setUserImage()
+        this.setUserInfo()
     }
 }
 </script>

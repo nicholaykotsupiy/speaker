@@ -1,8 +1,9 @@
 import { createStore } from 'vuex'
+import axios from "axios";
 
 export default createStore({
     state: {
-        user: [],
+        user: {},
         subscribe: [],
         subscribers: [],
         chats: [],
@@ -30,7 +31,6 @@ export default createStore({
         addSubscriber( state, subs ) {
             axios.post('/users/?_method=put', { user_id: subs.id })
                 .then(response => {
-                    console.log(subs)
                     subs.subscribed = true
                     state.subscribe.data.push(subs)
                     state.subscribe.subscribe_count += 1
@@ -46,15 +46,12 @@ export default createStore({
         },
         setAllChatsToState(state) {
             axios.get('/chatItems')
-                .then(response => {
-                    console.log(response)
-                    state.chats = response.data
-                })
+                .then(response => state.chats = response.data)
         },
 
         setChatToState(state, form) {
             axios.post('/chats/?_method=put', form)
-                .then( response => state.chats.push(response.data) )
+                .then( response => state.chats.push(response.data))
                 .catch( e => console.error(e) )
         },
 
@@ -64,10 +61,7 @@ export default createStore({
 
         addMessage(state, message) {
             axios.post('/message/?_method=put', message)
-                .then( response => {
-                    console.log( 'Message',response.data)
-                    state.messages.push(response.data)
-                } )
+                .then( response => state.messages.push(response.data))
                 .catch( e => console.error(e) )
         },
 
@@ -83,11 +77,19 @@ export default createStore({
         deleteChat(state, chatID) {
             axios.delete('/chats/' + chatID)
                 .then( response => {
-                    console.log(response)
                     let index = state.chats.findIndex(element => element.id === chatID)
                     state.chats.splice(index, 1)
                 })
                 .catch(e => console.log(e))
+        },
+
+        setUserInfo(state) {
+            axios.get('/user_info')
+                .then(response => {
+                    state.user.name = response.data.name
+                    state.user.login = response.data.login
+                })
+                .catch( e => console.log(e) )
         }
     },
     actions: {
@@ -149,7 +151,6 @@ export default createStore({
             return state.subscribers
         },
         imagePath(state) {
-
             if(state.user.path){
                 return `storage/${state.user.path}`
             }else {
@@ -161,6 +162,9 @@ export default createStore({
         },
         messageList(state) {
             return state.messages
+        },
+        user(state) {
+            return state.user
         }
     }
 })

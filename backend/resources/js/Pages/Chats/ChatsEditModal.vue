@@ -28,7 +28,7 @@
                             {{ subscriber.name }}
                         </option>
                     </select>
-                    <input type="submit" value="Create chat" class="block px-4 py-2 bg-blue-400 mx-auto rounded-md mt-4">
+                    <input :disabled="!disable" type="submit" value="Create chat" class="block px-4 py-2 bg-blue-400 mx-auto rounded-md mt-4">
                 </form>
             </div>
         </template>
@@ -49,7 +49,8 @@ export default {
     props: ['name','open', 'optionChat'],
     data: () => ({
         input: '',
-        usersID: []
+        usersID: [],
+        disable: false
     }),
     methods: {
         ...mapActions([
@@ -79,6 +80,11 @@ export default {
         if(this.optionChat) {
             this.input = this.optionChat.name || ''
             this.usersID = this.optionChat.users || []
+        }
+    },
+    watch: {
+        input() {
+            this.disable = this.input.trim() !== ''
         }
     }
 }

@@ -48,6 +48,13 @@
                 <jet-input-error :message="form.errors.name" class="mt-2" />
             </div>
 
+            <!-- Login -->
+            <div class="col-span-6 sm:col-span-4">
+                <jet-label for="login" value="Login" />
+                <jet-input id="login" type="text" class="mt-1 block w-full" v-model="form.login" autocomplete="login" />
+                <jet-input-error :message="form.errors.login" class="mt-2" />
+            </div>
+
             <!-- Email -->
             <div class="col-span-6 sm:col-span-4">
                 <jet-label for="email" value="Email" />
@@ -95,6 +102,7 @@
                 form: this.$inertia.form({
                     _method: 'PUT',
                     name: this.user.name,
+                    login: this.user.login,
                     email: this.user.email,
                     photo: null,
                 }),

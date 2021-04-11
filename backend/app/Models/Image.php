@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class Image extends Model
 {
     use HasFactory;
+    public $fillable = ['image'];
 
     public static function saveForUser (\Symfony\Component\HttpFoundation\File\UploadedFile $imageFile)
     {

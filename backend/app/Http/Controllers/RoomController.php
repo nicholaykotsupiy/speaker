@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Events\MessageSent;
+use App\Http\Requests\RoomRequest;
+use App\Http\Requests\StoreRoomRequest;
 use App\Http\Resources\MessagesResource;
 use App\Models\Message;
 use App\Models\User;
@@ -13,7 +15,7 @@ use Inertia\Inertia;
 
 class RoomController extends Controller
 {
-    public function index (Request $request)
+    public function index(Request $request)
     {
         $messages = Message::where('chat_id', $request->chat)->get();
 
@@ -23,7 +25,7 @@ class RoomController extends Controller
         ]);
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(StoreRoomRequest $request): JsonResponse
     {
         $message = new Message();
 

@@ -29,9 +29,13 @@ export default {
             'subscribe'
         ]),
         getUser(data) {
-            axios.get('/users/' + data.userLogin.toLowerCase())
-                .then(response => this.user = response.data || {})
-                .catch( e => console.error('Error:', e) )
+            if(!data.userLogin.includes(' ')) {
+                axios.get('/users/' + data.userLogin.toLowerCase())
+                    .then(response => this.user = response.data || {})
+                    .catch( e => console.error('Error:', e) )
+            } else {
+                alert('Not login')
+            }
         },
         subscribedUser() {
             this.subscribe(this.user)

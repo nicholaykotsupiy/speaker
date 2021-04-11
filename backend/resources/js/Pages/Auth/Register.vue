@@ -76,7 +76,6 @@
             JetLabel,
             JetValidationErrors
         },
-
         data() {
             return {
                 form: this.$inertia.form({

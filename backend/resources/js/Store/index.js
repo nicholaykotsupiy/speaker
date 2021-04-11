@@ -5,7 +5,8 @@ export default createStore({
         user: [],
         subscribe: [],
         subscribers: [],
-        chats: []
+        chats: [],
+        messages: []
     },
     mutations: {
         setSubscribeToState( state ) {
@@ -44,14 +45,49 @@ export default createStore({
         },
         setAllChatsToState(state) {
             axios.get('/chatItems')
-                .then(response => state.chats = response.data)
+                .then(response => {
+                    console.log(response)
+                    state.chats = response.data
+                })
         },
 
         setChatToState(state, form) {
             axios.post('/chats/?_method=put', form)
                 .then( response => state.chats.push(response.data) )
                 .catch( e => console.error(e) )
-        }
+        },
+
+        setMessagesToState(state, messages) {
+            state.messages = messages
+        },
+
+        addMessage(state, message) {
+            axios.post('/message/?_method=put', message)
+                .then( response => {
+                    console.log( 'Message',response.data)
+                    state.messages.push(response.data)
+                } )
+                .catch( e => console.error(e) )
+        },
+
+        exitUserFromChat(state, chatID) {
+            axios.delete('/exit/' + chatID)
+                .then( () => {
+                    let index = state.chats.findIndex(element => element.id === chatID)
+                    state.chats.splice(index, 1)
+                })
+                .catch(e => console.log(e))
+        },
+
+        deleteChat(state, chatID) {
+            axios.delete('/chats/' + chatID)
+                .then( response => {
+                    console.log(response)
+                    let index = state.chats.findIndex(element => element.id === chatID)
+                    state.chats.splice(index, 1)
+                })
+                .catch(e => console.log(e))
+        },
     },
     actions: {
         setSubscribeToState({ commit }) {
@@ -69,7 +105,7 @@ export default createStore({
             }
         },
 
-        upploadImage( { commit }, image ) {
+        uploadImage( { commit }, image ) {
             let form = new FormData()
             form.append('image', image)
 
@@ -82,6 +118,26 @@ export default createStore({
             form.append('usersID', payload.usersID)
 
             commit('setChatToState', form)
+        },
+
+        editChat({ getters }, payload) {
+            let form = new FormData()
+            form.append('id', payload.id)
+            form.append('admin', payload.admin)
+            form.append('name', payload.input)
+            form.append('usersID', payload.usersID)
+
+            axios.post('/chat/edit/?_method=put', form)
+                .then(response => {
+                    console.log(response.data)
+                    let chatItem = getters.chats.findIndex(item => item.id === response.data.id)
+                    getters.chats.splice(chatItem, 1, response.data)
+                })
+                .catch(e => console.log(e))
+        },
+
+        sendMessage({ commit }, message) {
+            commit('addMessage', message)
         },
     },
     getters: {
@@ -101,6 +157,9 @@ export default createStore({
         },
         chats(state) {
             return state.chats
+        },
+        messageList(state) {
+            return state.messages
         }
     }
 })

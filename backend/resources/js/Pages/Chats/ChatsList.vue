@@ -4,6 +4,7 @@
             v-for="chat in chats"
             :key="chat.id"
             :chat="chat"
+            @option="chatHandler"
         />
     </ul>
 </template>
@@ -19,7 +20,10 @@ export default {
     methods: {
         ...mapMutations([
             'setAllChatsToState'
-        ])
+        ]),
+        chatHandler(data) {
+            this.$emit('option', {chatID: data.chatID})
+        }
     },
     computed: {
         ...mapGetters([

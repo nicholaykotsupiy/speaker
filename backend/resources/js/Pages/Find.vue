@@ -29,7 +29,7 @@ export default {
     }),
     methods: {
         getUser(data) {
-            axios.get('/api/users/' + data.userLogin.toLowerCase())
+            axios.get('/users/' + data.userLogin.toLowerCase())
                 .then(response => {
                     this.user = response.data.user || []
                     this.isSubscribed = response.data.subscribed || false

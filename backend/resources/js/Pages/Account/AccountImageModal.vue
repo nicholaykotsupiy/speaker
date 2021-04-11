@@ -46,7 +46,7 @@ export default {
     }),
     methods: {
         ...mapActions([
-            'upploadImage'
+            'uploadImage'
         ]),
         closeHandler() {
             this.$emit('close')
@@ -55,7 +55,7 @@ export default {
             this.image = event.target.files[0]
         },
         sendForm() {
-            this.upploadImage(this.image)
+            this.uploadImage(this.image)
             this.$refs.input.value = null
             this.closeHandler()
         }

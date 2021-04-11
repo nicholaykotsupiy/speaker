@@ -33,6 +33,11 @@ Route::middleware('auth:sanctum')->group(function() {
 
     Route::get('/chatItems', [ChatController::class, 'index']);
     Route::put('/chats', [ChatController::class, 'store']);
+    Route::put('/chat/edit', [ChatController::class, 'edit']);
+    Route::delete('/exit/{id}', [ChatController::class, 'exit']);
+    Route::delete('/chats/{chat}', [ChatController::class, 'destroy']);
+
+    Route::put('/message', [RoomController::class, 'store']);
 
 });
 
@@ -45,6 +50,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/chats', function () {
         return Inertia::render('Chats');
     })->name('chats');
+
+    Route::get('/room', function () {
+        return redirect('/chats');
+    });
 
     Route::post('/room', [RoomController::class, 'index'])->name('room');
 

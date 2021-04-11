@@ -53,13 +53,15 @@ export default {
     }),
     methods: {
         ...mapActions([
-            'createChat'
+            'editChat'
         ]),
         closeHandler() {
             this.$emit('close')
         },
         clickHandle() {
-            this.createChat({
+            this.editChat({
+                id: this.optionChat.id,
+                admin: this.optionChat.admin,
                 input: this.input,
                 usersID: this.usersID,
             })

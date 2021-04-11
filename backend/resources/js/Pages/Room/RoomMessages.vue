@@ -1,8 +1,8 @@
 <template>
     <div class="h-96 w-full">
-        <div class="h-full p-2 flex flex-col overflow-scroll">
+        <div class="h-full p-2 flex flex-col overflow-y-scroll">
             <ul v-for="message in messages" :key="message.id">
-                <RoomMessagesItem :message="message" />
+                <RoomMessagesItem :message="message" class="p-1"/>
             </ul>
         </div>
     </div>
@@ -13,25 +13,7 @@ import RoomMessagesItem from "./RoomMessagesItem";
 export default {
     name: "RoomMessages",
     components: {RoomMessagesItem},
-    data: () => ({
-        messages: [
-            {
-                id: 1,
-                user: 'Jon',
-                title: 'Hello all'
-            },
-            {
-                id: 2,
-                user: 'Alan',
-                title: 'Hello all2'
-            },
-            {
-                id: 3,
-                user: 'Rin',
-                title: 'Hello all3'
-            }
-        ]
-    })
+    props: ['messages'],
 }
 </script>
 

@@ -4,12 +4,12 @@
             <input
                 type="text"
                 v-model="message"
-                @keyup.enter="sendMessage"
+                @keyup.enter="sendHandler"
                 placeholder="Say something..."
                 class="col-span-5 outline-none p-1"
             />
             <button
-                @click="sendMessage"
+                @click="sendHandler"
                 class="place-self-end bg-gray-500 hover:bg-blue-700 p-1 mt-1 rounded text-white">
                 Send
             </button>
@@ -18,14 +18,26 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
+
 export default {
     name: "RoomInputMessage",
+    props: ['chatID'],
     data: () => ({
         message: ''
     }),
     methods: {
-        sendMessage() {
-            console.log('Send message')
+        ...mapActions([
+           'sendMessage'
+        ]),
+        sendHandler() {
+            if( this.message.trim() !== '' ) {
+                this.sendMessage({
+                    title: this.message,
+                    chat_id: this.chatID
+                })
+                this.message = ''
+            }
         }
     }
 }
